@@ -1,29 +1,41 @@
-
 import { Fragment, useContext } from 'react';
-import { Outlet, Link} from 'react-router-dom';
-import { ReactComponent as CrwLogo } from '../../assets/crown.svg';
+import { Outlet, Link } from 'react-router-dom';
+
 import { UserContext } from '../../context/app.context';
+
+import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
+import { signOutUser } from '../../utils/firebase/firebase';
 
 import './navigation.styles.scss';
 
 const Navigation = () => {
-  const { setCurrentUser, color } = useContext(UserContext);
-    return (
-      <Fragment>
-        <div className="navigation">
-            <Link to='/' className='logo-container'>
-                <CrwLogo />
-            </Link>
-            <div className ='nav-links-container'>
-                <Link to='shop' className='nav-link' >Shop</Link>
-            </div>
-            <div className ='nav-links-container'>
-                <Link to='sign-in' className='nav-link' >SignIn</Link>
-            </div>
-        </div>
-        <Outlet />
-      </Fragment>
-    )
-  }
+  const { currentUser } = useContext(UserContext);
 
-  export default Navigation;
+  return (
+    <Fragment>
+      <div className='navigation'>
+        <Link className='logo-container' to='/'>
+          <CrwnLogo className='logo' />
+        </Link>
+        <div className='nav-links-container'>
+          <Link className='nav-link' to='/shop'>
+            SHOP
+          </Link>
+
+          {currentUser ? (
+            <span className='nav-link' onClick={signOutUser}>
+              SIGN OUT
+            </span>
+          ) : (
+            <Link className='nav-link' to='/auth'>
+              SIGN IN
+            </Link>
+          )}
+        </div>
+      </div>
+      <Outlet />
+    </Fragment>
+  );
+};
+
+export default Navigation;
