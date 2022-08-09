@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectCategoriesMap, selectIsLoading } from '../../store/categories/category.selector';
-import Spinner from '../../components/spinner/spinner.component';
+import Spinner from '../../components/spinner/spinner.styles';
 import CategoryPreview from '../../components/category-preview/category-preview.component';
 
 const CategoriesPreview = () => {
