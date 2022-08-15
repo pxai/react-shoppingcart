@@ -20,18 +20,16 @@ import {
   getDocs,
 } from 'firebase/firestore';
 
-
 const firebaseConfig = {
-  apiKey: "AIzaSyBG3TDX7VshSoflk6nyRpnaBQ3vNJskF9g",
-  authDomain: "shopping-cart-a547d.firebaseapp.com",
-  projectId: "shopping-cart-a547d",
-  storageBucket: "shopping-cart-a547d.appspot.com",
-  messagingSenderId: "544535590255",
-  appId: "1:544535590255:web:947401929330d37558e49a"
+  apiKey: 'AIzaSyDDU4V-_QV3M8GyhC9SVieRTDM4dbiT0Yk',
+  authDomain: 'crwn-clothing-db-98d4d.firebaseapp.com',
+  projectId: 'crwn-clothing-db-98d4d',
+  storageBucket: 'crwn-clothing-db-98d4d.appspot.com',
+  messagingSenderId: '626766232035',
+  appId: '1:626766232035:web:506621582dab103a4d08d6',
 };
 
-initializeApp(firebaseConfig);
-//const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -98,7 +96,7 @@ export const createUserDocumentFromAuth = async (
     }
   }
 
-  return userDocRef;
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -117,3 +115,16 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
